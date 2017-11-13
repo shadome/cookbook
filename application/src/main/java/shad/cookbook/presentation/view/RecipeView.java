@@ -35,4 +35,16 @@ public class RecipeView {
     public RecipeEntity getSource() {
         return this.mSource;
     }
+
+    public class ByteToBitmapRunnable implements Runnable {
+        byte[] mSrc;
+        Bitmap mRes;
+        public ByteToBitmapRunnable (byte[] src, Bitmap res) {
+            mSrc = src;
+            mRes = res;
+        }
+        @Override public void run() {
+            mRes = BitmapFactory.decodeByteArray(mSrc, 0, mSrc.length);
+        }
+    }
 }

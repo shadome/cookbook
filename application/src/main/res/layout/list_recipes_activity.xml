@@ -5,15 +5,16 @@
     android:layout_height="match_parent">
 
     <fragment
+        android:id="@+id/list_recipes_fragment_main"
+        android:name="shad.cookbook.presentation.activities.recipes.ListRecipesFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/list_recipes_fragment"
         />
     <!--android:name="shad.cookbook.presentation.activities.recipes.ListRecipesFragment"-->
 
-    <FrameLayout
-        android:id="@+id/recipe_list_fragment_placeholder"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+    <!--<FrameLayout-->
+        <!--android:id="@+id/recipe_list_fragment_placeholder"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"/>-->
 
 </android.support.design.widget.CoordinatorLayout>

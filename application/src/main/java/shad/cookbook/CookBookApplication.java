@@ -9,7 +9,10 @@ import java.util.List;
 
 import shad.cookbook.data.model.entities.DaoMaster;
 import shad.cookbook.data.model.entities.DaoSession;
+import shad.cookbook.data.model.entities.FoodEntity;
+import shad.cookbook.data.model.entities.IngredientEntity;
 import shad.cookbook.data.model.entities.RecipeEntity;
+import shad.cookbook.data.model.entities.UnitEntity;
 import shad.cookbook.presentation.view.RecipeView;
 
 
@@ -24,24 +27,33 @@ public class CookBookApplication extends Application {
         mDaoSession = new DaoMaster(
                 new DaoMaster.DevOpenHelper(this, "cookbook.db").getWritableDb()).newSession();
         // USER CREATION FOR DEMO PURPOSE
-//        RecipeEntity r = new RecipeEntity(1L, "name", "description", "tips", "instructions", null);
-//        FoodEntity f1 = new FoodEntity(1L, "tofu");
-//        FoodEntity f2 = new FoodEntity(2L, "water");
-//        IngredientEntity g1 = new IngredientEntity(1L, r.getId(), f1.getId(), "ingredient_1", 200, Unit.G);
-//        IngredientEntity g2 = new IngredientEntity(2L, r.getId(), f2.getId(), "ingredient_2", 100, Unit.L);
-//        DaoMaster.dropAllTables(mDaoSession.getDatabase(), true);
-//        DaoMaster.createAllTables(mDaoSession.getDatabase(), true);
+        FoodEntity f1 = new FoodEntity(1L, "tofu");
+        FoodEntity f2 = new FoodEntity(2L, "water");
+        UnitEntity u1 = new UnitEntity(1L, "g", "grammes");
+        UnitEntity u2 = new UnitEntity(2L, "l", "litres");
+        IngredientEntity g1 = new IngredientEntity(1L, 1L, f1.getId(), "ingredient_1", 200, 1L);
+        IngredientEntity g2 = new IngredientEntity(2L, 1L, f2.getId(), "ingredient_2", 100, 2L);
 
-//        mDaoSession.getRecipeDao().deleteAll();
-//        mDaoSession.getFoodDao().deleteAll();
-//        mDaoSession.getIngredientDao().deleteAll();
-//        mDaoSession.getRecipeDao().insertOrReplace(r);
-//        mDaoSession.getFoodDao().insertOrReplace(f1);
-//        mDaoSession.getFoodDao().insertOrReplace(f2);
-//        mDaoSession.getIngredientDao().insertOrReplace(g1);
-//        mDaoSession.getIngredientDao().insertOrReplace(g2);
+        DaoMaster.dropAllTables(mDaoSession.getDatabase(), true);
+        DaoMaster.createAllTables(mDaoSession.getDatabase(), true);
 
-//        resetRecipes();
+        mDaoSession.getUnitEntityDao().deleteAll();
+        mDaoSession.getRecipeEntityDao().deleteAll();
+        mDaoSession.getFoodEntityDao().deleteAll();
+        mDaoSession.getIngredientEntityDao().deleteAll();
+
+        mDaoSession.getUnitEntityDao().insertOrReplace(u1);
+        mDaoSession.getUnitEntityDao().insertOrReplace(u2);
+        for (long l = 0; l < 10; l++) {
+            RecipeEntity r = new RecipeEntity(l, "name", "description", "tips", "instructions", null);
+            mDaoSession.getRecipeEntityDao().insertOrReplace(r);
+        }
+        mDaoSession.getFoodEntityDao().insertOrReplace(f1);
+        mDaoSession.getFoodEntityDao().insertOrReplace(f2);
+        mDaoSession.getIngredientEntityDao().insertOrReplace(g1);
+        mDaoSession.getIngredientEntityDao().insertOrReplace(g2);
+
+        resetRecipes();
         recipes = RecipeView.Convert(mDaoSession.getRecipeEntityDao().loadAll());
     }
 
